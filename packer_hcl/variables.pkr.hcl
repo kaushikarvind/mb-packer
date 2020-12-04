@@ -24,7 +24,7 @@ variable "az_subscription_id" {
 
 variable "az_rg" {
   type =  string
-  default = "rg-metro-digital-rig"
+  default = "mb-rg"
 }
 
 variable "az_location" {
