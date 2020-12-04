@@ -19,27 +19,28 @@ locals { timestamp = regex_replace(timestamp(), "[- TZ:]", "") }
 # source. Read the documentation for source blocks here:
 # https://www.packer.io/docs/from-1.5/blocks/source
 source "azure-arm" "pkr_vm" {
-  azure_tags = {
-    dept = "NA"
-    task = "Packer Image Creation"
-  }
-
   client_id                         = var.az_client_id
   client_secret                     = var.az_client_secret
   subscription_id                   = var.az_subscription_id
   tenant_id                         = var.az_tenant_id
 
+  managed_image_name                = "mb-rhel-dec20"
   managed_image_resource_group_name = var.az_rg
-  managed_image_name                = "MB_dec20"
+  build_resource_group_name         = var.az_rg
 
   os_type                           = "Linux"
-  image_publisher                   = "RedHat"  #"Canonical"
   image_offer                       = "RHEL"    #"UbuntuServer"
+  image_publisher                   = "RedHat"  #"Canonical"
   image_sku                         = "7.5"     #"18.04-LTS"
+  #location                          = var.az_location
 
-  location                          = var.az_location
-  vm_size                           = "Standard_DS2-v2"  #"Standard_B1ls"
-  ssh_username                      = "azuser"
+  vm_size                           = "Standard_B1ls"  #"Standard_DS2_v2"
+  ssh_username                      = "azureuser"
+
+  azure_tags = {
+    dept = "NA"
+    task = "Packer Image Creation"
+  }
 }
 
 # a build block invokes sources and runs provisioning steps on them. The
@@ -58,6 +59,9 @@ build {
   }
   provisioner "shell" {
     script = "scripts/cleanup.sh"
+  }
+  provisioner "shell" {
+    inline = ["echo '************ DEPROVISION'", "sudo /usr/sbin/waagent -force -deprovision+user && export HISTSIZE=0 && sync"]
   }
   post-processor "manifest" {
     output     = "manifest.json"
