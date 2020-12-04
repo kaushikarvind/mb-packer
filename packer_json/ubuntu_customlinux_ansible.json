@@ -2,10 +2,10 @@
   "builders": [
     {
       "type": "azure-arm",
-      "client_id": "f047e53e-843d-4855-9ffd-a0cf3468143b",
-      "client_secret": "kbWA_Pbd5Nvd1e0~1r4WU3-1QsJsNDL7fN",
-      "tenant_id": "8f8fe412-6556-4747-b17e-5f7e14a87a70",
-      "subscription_id": "8a4a71de-47c9-4d83-86d8-57a0e67ed471",
+      "client_id": "Your id",
+      "client_secret": "Your id",
+      "tenant_id": "Your id",
+      "subscription_id": "Your id",
       "managed_image_resource_group_name": "mb-rg",
       "managed_image_name": "MB_dec20",
       "os_type": "Linux",
