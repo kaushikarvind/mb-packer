@@ -1,29 +1,26 @@
 {
-  "builders": [{
-    "type": "azure-arm",
-
-    "client_id" : "YOUR_CLIENT_ID",
-    "client_secret" : "YOUR_CLIENT_SECRET",
-    "tenant_id" : "YOUR_TENANT_ID",
-    "subscription_id" : "YOUR_SUBSCRIPTION_ID",
-
-    "managed_image_resource_group_name": "mb_rg",
-    "managed_image_name": "MB_dec20",
-
-    "os_type": "Linux",
-    "image_publisher": "Canonical",
-    "image_offer": "UbuntuServer",
-    "image_sku": "18.04-LTS",
-
-    "azure_tags": {
+  "builders": [
+    {
+      "type": "azure-arm",
+      "client_id": "f047e53e-843d-4855-9ffd-a0cf3468143b",
+      "client_secret": "kbWA_Pbd5Nvd1e0~1r4WU3-1QsJsNDL7fN",
+      "tenant_id": "8f8fe412-6556-4747-b17e-5f7e14a87a70",
+      "subscription_id": "8a4a71de-47c9-4d83-86d8-57a0e67ed471",
+      "managed_image_resource_group_name": "mb-rg",
+      "managed_image_name": "MB_dec20",
+      "os_type": "Linux",
+      "image_publisher": "Canonical",
+      "image_offer": "UbuntuServer",
+      "image_sku": "18.04-LTS",
+      "azure_tags": {
         "dept": "NA",
         "task": "Packer Image Creation"
-    },
-
-    "location": "UK South",
-    "vm_size": "Standard_B1ls",
-    "ssh_username": "ubuntu"
-  }],
+      },
+      "location": "UK South",
+      "vm_size": "Standard_B1ls",
+      "ssh_username": "ubuntu"
+    }
+  ],
   "_comment": "Running Ansible roles on the image",
   "provisioners": [
     {
@@ -43,6 +40,13 @@
     {
       "type": "shell",
       "script": "scripts/cleanup.sh"
+    },
+    {
+      "type": "shell",
+      "inline": [
+        "echo '************ DEPROVISION'",
+        "sudo /usr/sbin/waagent -force -deprovision+user && export HISTSIZE=0 && sync"
+      ]
     }
   ],
   "post-processors": [
