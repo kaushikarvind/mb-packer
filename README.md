@@ -17,3 +17,5 @@
 #Create a resoruce group in Azure, with the same name as it is declared in variables under packer_hcl or packer_json folder
 
 #Create terraform.tfvars file within the terraform folder - it should declare the critical variables client id, client secret, tenant id & subscription id
+
+#Create Storage Account & Container beforehand in Azure to store terraform.tfstate files for remote state storage
